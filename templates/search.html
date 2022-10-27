@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Поиск по корпусу
+{% endblock %}
+
+{% block body %}
+<br>
+    <br>
+    <br>
+    <br>
+    <br>
+<form method="post" class="container">
+    <div class="card-body row no-gutters align-items-center">
+        <div class="col-auto">
+            <i class="fas fa-search h4 text-body">
+            </i>
+        </div>
+        <div class="col">
+            <input name="query" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Введите слово для поиска">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-lg btn-light" type="submit">Искать</button>
+        </div>
+    </div>
+</form>
+<center>
+<h2>можно искать:</h2>
+<br>
+1. <b>Лемму</b>, для этого введите слово без кавычек (например, любовь)
+<br>
+2. <b>Словоформу</b>, для этого введите слово в кавычках ("любовь")
+<br>
+3. <b>Часть речи</b>, для этого введите один из тегов, полный список тегов можно найти на главной странице в разделе "Морфологическая разметка". (например, "NOUN")
+<br>
+4. <b>Омоним по части речи и словоформе</b>, для этого введите словоформу+часть речи (например, душу+NOUN)
+</center>
+
+
+{% if total %}
+<center><table width=80%>
+    <col style="width:10%">
+	<col style="width:45%">
+    <col style="width:15%">
+	<col style="width:30%">
+    <caption>
+        <tr><th>Токен</th><th>Текст</th><th>Тематика</th><th>Источник</th></tr></caption>
+    {% for row in items %}
+      <tr>
+            <td>{{ row.result }}</td>
+            <td class = "td">{{ row.sentence }}</td>
+            <td class = "td">{{ row.theme }}</td>
+            <td class = "td">{{ row.source }}</td>
+        </tr>
+    {% endfor %}
+</table></center>
+{% endif %}
+
+{% if not total %}
+<center><table width=80%>
+    <col style="width:10%">
+  <col style="width:45%">
+    <col style="width:15%">
+  <col style="width:30%">
+    <img src="{{ url_for('static', filename='builtin/no_words.jpg') }}" />
+</table></center>
+{% endif %}
+
+{% endblock %}
